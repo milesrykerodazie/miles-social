@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rancho&display=swap");
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #9d4edd;
+}
+::-webkit-scrollbar-thumb {
+  background: #5a189a;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-l from-sm5 via-sm7 to-sm5;
+  }
+}
