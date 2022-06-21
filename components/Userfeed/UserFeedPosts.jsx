@@ -1,17 +1,23 @@
 import Image from "next/image";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
-import { Users } from "../../public/assets/dummyData";
+import { ImSpinner3 } from "react-icons/im";
 import ReadMoreReadLess from "../Helpers/ReadMoreReadLess";
 import moment from "moment";
 import { format } from "timeago.js";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { baseAPI } from "../constants/Constant";
+import axios from "axios";
 
 const UserFeedPosts = ({ userDetails, post }) => {
   // getting the user from the user data from redux using useSelector
   const { user } = useSelector((state) => ({ ...state.auth }));
+
+  // getting the router from next/router
+  const router = useRouter();
 
   //states for likes
   const [likes, setLikes] = useState(post?.likes.length);
@@ -43,6 +49,43 @@ const UserFeedPosts = ({ userDetails, post }) => {
     }
   };
 
+  //state for open delete
+  const [openDelete, setOpenDelete] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  // handle open delete
+  const handleConfirmDelete = (e) => {
+    e.preventDefault();
+    setOpenDelete(false);
+    setConfirmDelete(true);
+  };
+
+  // handle delete post
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    if (post?.userId !== user?.user._id) {
+      toast.error("You can't delete this post");
+      return;
+    }
+    try {
+      setDeleting(true);
+      const response = await axios.delete(`${baseAPI}/deletepost/${post?._id}`);
+      console.log("delete response => ", response);
+      setDeleting(false);
+      setConfirmDelete(false);
+      setOpenDelete(false);
+      toast.success("Post deleted successfully!!");
+      router.reload();
+    } catch (error) {
+      toast.error(error?.response?.data.message);
+      setDeleting(false);
+      setConfirmDelete(false);
+      setOpenDelete(false);
+      console.log(error?.response?.data.message);
+    }
+  };
+
   return (
     <div className="bg-sm1 rounded-lg shadow-md shadow-sm2/70 p-2 space-y-5">
       <div className="flex items-center justify-between">
@@ -50,8 +93,8 @@ const UserFeedPosts = ({ userDetails, post }) => {
           <div className="relative w-6 h-6 2xl:w-10 2xl:h-10">
             <Image
               src={
-                userDetails?.profilePic
-                  ? userDetails?.profilePic
+                userDetails?.profilePicture
+                  ? userDetails?.profilePicture
                   : "https://icon-library.com/images/blank-person-icon/blank-person-icon-9.jpg"
               }
               alt="logo"
@@ -70,9 +113,55 @@ const UserFeedPosts = ({ userDetails, post }) => {
             </span>
           </span>
         </div>
-        <div className="pr-3">
-          <BsThreeDotsVertical className="text-sm7 w-5 h-5 cursor-pointer" />
-        </div>
+        {/* delete here */}
+        {post?.userId === user?.user._id && (
+          <div className="relative">
+            {deleting === false && (
+              <div className="pr-3" onClick={() => setOpenDelete(!openDelete)}>
+                <BsThreeDotsVertical className="text-sm7 w-5 h-5 cursor-pointer" />
+              </div>
+            )}
+
+            {openDelete && (
+              <div
+                className="shadow-lg shadow-sm7 px-3 py-2 absolute top-7 right-0 rounded-md cursor-pointer"
+                onClick={handleConfirmDelete}
+              >
+                <p className="font-quicksand text-sm lg:text-base">Delete</p>
+              </div>
+            )}
+            {deleting === true ? (
+              <div className="flex items-center space-x-1">
+                <p className="animate-slowpulse text-lg text-sm7">
+                  Deleting...
+                </p>
+                <ImSpinner3 className="w-6 h-6 animate-spin" />
+              </div>
+            ) : (
+              <div>
+                {confirmDelete && (
+                  <div className="shadow-lg shadow-sm7 px-3 py-2 absolute top-7 right-0 rounded-md">
+                    <div className="text-sm lg:text-base font-quicksand flex items-center space-x-4">
+                      <p
+                        className="cursor-pointer border-b-2 border-sm6"
+                        onClick={handleDelete}
+                      >
+                        Confirm
+                      </p>
+                      <span>/</span>
+                      <p
+                        className="cursor-pointer text-sm7 font-bold"
+                        onClick={() => setConfirmDelete(false)}
+                      >
+                        Cancel
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </div>
       <div>
         <ReadMoreReadLess
@@ -86,7 +175,7 @@ const UserFeedPosts = ({ userDetails, post }) => {
           {post?.description}
         </ReadMoreReadLess>
       </div>
-      <div className="relative w-full h-32 sm:h-60 md:h-80 lg:h-[400px]">
+      <div className="relative w-full h-60 lg:h-[400px]">
         <Image
           src={
             post?.img

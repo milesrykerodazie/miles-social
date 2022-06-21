@@ -10,6 +10,7 @@ import { useRef, useState } from "react";
 import { baseAPI } from "../constants/Constant";
 import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
+import Resizer from "react-image-file-resizer";
 
 const FeedTop = () => {
   //getting the user from redux using the useSelector hook
@@ -27,28 +28,32 @@ const FeedTop = () => {
   const router = useRouter();
 
   //handle image upload
-  const handleImage = async (e) => {
-    const file = e.target?.files[0];
-    await setFileToBase(file);
-  };
-
-  //setting the image file to base 64
-  const setFileToBase = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      if (file) {
-        fileReader.readAsDataURL(file);
-        fileReader.onload = () => {
-          resolve(fileReader.result);
-          setImage(fileReader.result);
-        };
-        fileReader.onerror = (error) => {
-          reject(error);
-        };
-      }
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        400,
+        400,
+        "webp",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64"
+      );
     });
+  const handleImage = async (e) => {
+    e.preventDefault();
+    try {
+      const file = e.target.files[0];
+      const imageResized = await resizeFile(file);
+      setImage(imageResized);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
+  console.log("image => ", image);
   //handle submit post
   const handlePostSubmit = async (e) => {
     e.preventDefault();

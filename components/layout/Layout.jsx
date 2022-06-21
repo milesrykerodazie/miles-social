@@ -25,21 +25,6 @@ const Layout = ({ children }) => {
         <header className="lg:hidden ">
           <MobileHeader />
         </header>
-        {/* {user && (
-          <div
-            className="text-2xl fixed bottom-2 right-4 z-70 bg-sm6 p-2 rounded-full motion-safe:animate-pulse lg:hidden"
-            onClick={() => setOnlineOpen(!onlineOpen)}
-          >
-            <BsFillChatDotsFill className="w-10 h-10 text-sm2" />
-          </div>
-        )}
-
-        <div className="lg:hidden">
-          <OnlineFriends
-            onlineOpen={onlineOpen}
-            setOnlineOpen={setOnlineOpen}
-          />
-        </div> */}
       </div>
       {user && (
         <div className="md:flex md:max-w-[95%] lg:max-w-[80%] mx-auto pb-5 mt-[56px]">

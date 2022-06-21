@@ -1,7 +1,6 @@
 import LoadingSkeleton from "../loadingComponent/LoadingSkeleton";
 import UserFeedPosts from "./UserFeedPosts";
 import UserFeedTop from "./UserFeedTop";
-// import { Posts } from "../../public/assets/dummyData";
 
 const UserFeed = ({ userFeeds, userDetails }) => {
   return (

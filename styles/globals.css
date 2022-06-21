@@ -24,3 +24,30 @@
     @apply bg-gradient-to-l from-sm5 via-sm7 to-sm5;
   }
 }
+
+@layer components {
+  .form-input {
+    @apply w-full px-3 py-2 text-sm lg:text-base bg-transparent shadow-md shadow-sm1 rounded-md text-sm1 outline-none font-libre tracking-wider;
+  }
+  .textarea {
+    @apply w-full px-3 py-1 outline-none rounded-md bg-transparent shadow-md shadow-sm1 text-sm1 font-libre text-sm lg:text-base tracking-wider;
+  }
+  .select {
+    @apply flex items-center p-2 shadow-md shadow-sm1 justify-between;
+  }
+  .label {
+    @apply text-sm1 font-charm text-sm tracking-wider;
+  }
+  .dropdown {
+    @apply bg-sm7 shadow-md shadow-sm1 absolute top-14 z-20 px-1 rounded mt-1 h-72 overflow-y-auto w-full;
+  }
+  .list {
+    @apply text-sm md:text-base font-semibold space-y-3 rounded-t-md text-sm1;
+  }
+  .names {
+    @apply pl-3 cursor-pointer hover:text-sm3;
+  }
+  .p {
+    @apply text-xs md:text-sm capitalize text-gray-500 py-1;
+  }
+}

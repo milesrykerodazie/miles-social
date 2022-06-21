@@ -50,15 +50,26 @@ const ProfileRightside = ({ userDetails }) => {
           User Information
         </p>
         <div className="space-y-1">
-          <p className="font-charm text-sm 2xl:text-xl tracking-wider text-sm7">
-            <b>City:</b> Obigbo.
-          </p>
-          <p className="font-charm text-sm 2xl:text-xl tracking-wider text-sm7">
-            <b>From:</b> AlaIgbo.
-          </p>
-          <p className="font-charm text-sm 2xl:text-xl tracking-wider text-sm7">
-            <b>Relationship:</b> Polygamous.
-          </p>
+          {userDetails?.city && (
+            <p className="font-charm text-sm 2xl:text-xl tracking-wider text-sm7">
+              <b>City:</b> {userDetails?.city}
+            </p>
+          )}
+          {userDetails?.state && (
+            <p className="font-charm text-sm 2xl:text-xl tracking-wider text-sm7">
+              <b>State:</b> {userDetails?.state}
+            </p>
+          )}
+          {userDetails?.country && (
+            <p className="font-charm text-sm 2xl:text-xl tracking-wider text-sm7">
+              <b>Country:</b> {userDetails?.country}
+            </p>
+          )}
+          {userDetails?.relationships && (
+            <p className="font-charm text-sm 2xl:text-xl tracking-wider text-sm7">
+              <b>Relationship Status:</b> {userDetails?.relationships}
+            </p>
+          )}
         </div>
       </div>
 

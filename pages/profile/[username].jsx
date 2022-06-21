@@ -5,12 +5,14 @@ import Layout from "../../components/layout/Layout";
 import Head from "next/head";
 import { MdAdd } from "react-icons/md";
 import { GrFormSubtract } from "react-icons/gr";
+import { AiFillEdit } from "react-icons/ai";
 import { USERNAME_POSTS } from "../../components/constants/Constant";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { baseAPI } from "../../components/constants/Constant";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const UserProfile = ({ userPosts }) => {
   //getting the signed in user
@@ -18,10 +20,30 @@ const UserProfile = ({ userPosts }) => {
   //getting the user details
   const userDetails = userPosts?.currentUser;
   const userFeeds = userPosts?.usernamePosts;
+  const username = userPosts?.currentUser?.username;
+
+  //router
+  const router = useRouter();
 
   //states
 
   const [userFollowers, setUserFollowers] = useState([]);
+  const [userFollowings, setUserFollowings] = useState([]);
+
+  //getting the user followings from the data
+  useEffect(() => {
+    const getFollowings = async () => {
+      try {
+        const friendsList = await axios.get(
+          `${baseAPI}/user/${userDetails._id}/followings`
+        );
+        setUserFollowings(friendsList?.data.friends);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getFollowings();
+  }, [userDetails?._id]);
 
   //getting the user followers from the data
   useEffect(() => {
@@ -68,6 +90,12 @@ const UserProfile = ({ userPosts }) => {
     }
   };
 
+  //toEditProfile
+  const editProfile = (e) => {
+    e.preventDefault();
+    router.push(`/editprofile/${username}`);
+  };
+
   return (
     <div className="rounded-b-md space-y-3">
       <Head>
@@ -79,7 +107,7 @@ const UserProfile = ({ userPosts }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="">
-        <div className="relative max-w-full mx-auto h-44 2xl:h-60">
+        <div className="relative max-w-full mx-auto h-40 2xl:h-60">
           <Image
             src={
               userDetails?.coverPicture
@@ -90,9 +118,18 @@ const UserProfile = ({ userPosts }) => {
             layout="fill"
             className="cursor-pointer rounded-b-md object-cover"
           />
+          <div className="absolute top-0 right-0" onClick={editProfile}>
+            <button className="flex items-center space-x-2 bg-sm5 px-5 py-2 rounded-bl-lg">
+              <p className="text-sm1 font-charm text-base lg:text-lg tracking-wider font-semibold">
+                Edit
+              </p>
+              <AiFillEdit className="text-sm1 cursor-pointer w-5 h-5 lg:w-6 lg:h-6" />
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col items-center justify-center -mt-14 2xl::-mt-20">
-          <div className="relative w-12 h-12 z-40">
+
+        <div className="flex flex-col items-center justify-center -mt-6 lg:-mt-10">
+          <div className="relative w-12 h-12 lg:w-16 lg:h-16 z-40">
             <Image
               src={
                 userDetails?.profilePicture
@@ -105,7 +142,7 @@ const UserProfile = ({ userPosts }) => {
             />
           </div>
           <div className="flex items-center space-x-2">
-            <p className="mt-2 text-sm1 text-lg 2xl:text-xl font-charm tracking-wider font-bold">
+            <p className="mt-1 text-sm1 text-lg 2xl:text-xl font-charm tracking-wider font-bold">
               {userDetails?.firstName + " " + userDetails?.lastName}
             </p>
             {profileFollowers.includes(user?.user._id) ? (
@@ -129,6 +166,20 @@ const UserProfile = ({ userPosts }) => {
                 <MdAdd className="w-6 h-6" />
               </button>
             )}
+          </div>
+          <div className="flex items-center space-x-4 lg:hidden mt-3">
+            <p className="text-sm1 font-libre tracking-wider text-sm shadow-sm shadow-sm1 p-2 rounded-sm font-semibold">
+              Followers{" "}
+              <span className="bg-sm5 px-3 py-1 rounded-md">
+                {userFollowers?.length}
+              </span>
+            </p>
+            <p className="text-sm1 font-libre tracking-wider text-sm shadow-sm shadow-sm1 p-2 rounded-sm font-semibold">
+              Following{" "}
+              <span className="bg-sm5 px-3 py-1 rounded-md">
+                {userFollowings?.length}
+              </span>
+            </p>
           </div>
         </div>
       </div>
@@ -157,27 +208,3 @@ export async function getServerSideProps(context) {
     },
   };
 }
-
-// export async function getServerSideProps(context) {
-//   const { username } = context.query;
-//   const [userPostsRes, userDetailsRes] = await Promise.all([
-//     fetch(
-//       `https://social-media-backend-one.vercel.app/milesapi/usernameposts/${username}`
-//     ),
-//     fetch(
-//       `https://social-media-backend-one.vercel.app/milesapi/userDetails/${username}`
-//     ),
-//   ]);
-
-//   const [userPosts, userDetails] = await Promise.all([
-//     userPostsRes.json(),
-//     userDetailsRes.json(),
-//   ]);
-
-//   return {
-//     props: {
-//       userPosts,
-//       userDetails,
-//     },
-//   };
-// }

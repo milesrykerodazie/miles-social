@@ -7,8 +7,5 @@ export const TIMELINE_POSTS =
 export const USERNAME_POSTS =
   "https://milessocial-media-backend.herokuapp.com/milesapi/usernameposts";
 
-// export const CONVERSATION_API =
-//   "https://milessocial-media-backend.herokuapp.com/milesapi/conversations";
-
-// export const MESSAGES_API =
-//   "https://milessocial-media-backend.herokuapp.com/milesapi/messages";
+export const USER_DETAILS =
+  "https://milessocial-media-backend.herokuapp.com/milesapi/userDetails";

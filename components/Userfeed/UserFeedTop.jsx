@@ -9,15 +9,14 @@ import { useRef, useState } from "react";
 import { baseAPI } from "../constants/Constant";
 import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
+import Resizer from "react-image-file-resizer";
 
 const UserFeedTop = ({ userDetails }) => {
   //getting the logged in user from redux using useSelector hook
   const { user } = useSelector((state) => ({ ...state.auth }));
-  //getting the first letters of the first andlast names
-  const flFirstName = user?.user.firstName[0];
-  const flLastName = user?.user.lastName[0];
 
   //states for the post
+
   const [image, setImage] = useState("");
   const postDescription = useRef("");
   const [processing, setProcessing] = useState(false);
@@ -26,29 +25,35 @@ const UserFeedTop = ({ userDetails }) => {
   const router = useRouter();
 
   //handle image upload
-  const handleImage = async (e) => {
-    const file = e.target?.files[0];
-    await setFileToBase(file);
-  };
 
-  //setting the image file to base 64
-  const setFileToBase = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      if (file) {
-        fileReader.readAsDataURL(file);
-        fileReader.onload = () => {
-          resolve(fileReader.result);
-          setImage(fileReader.result);
-        };
-        fileReader.onerror = (error) => {
-          reject(error);
-        };
-      }
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        400,
+        400,
+        "JPEG",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64"
+      );
     });
+
+  const handleImage = async (e) => {
+    e.preventDefault();
+    try {
+      const file = e.target.files[0];
+      const imageResized = await resizeFile(file);
+      setImage(imageResized);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  //handle submit post
+  // handle submit post
   const handlePostSubmit = async (e) => {
     e.preventDefault();
 
@@ -84,8 +89,8 @@ const UserFeedTop = ({ userDetails }) => {
         <div className="relative w-10 h-10 2xl:w-12 2xl:h-12">
           <Image
             src={
-              userDetails?.profilePic
-                ? userDetails?.profilePic
+              userDetails?.profilePicture
+                ? userDetails?.profilePicture
                 : "https://icon-library.com/images/blank-person-icon/blank-person-icon-9.jpg"
             }
             alt="logo"
@@ -117,8 +122,7 @@ const UserFeedTop = ({ userDetails }) => {
             hidden
             type="file"
             id="file"
-            name="image"
-            accept=".png,.jpeg,.jpg"
+            name="upload-file"
             onChange={handleImage}
           />
           <div className="flex items-center space-x-2 cursor-pointer">
