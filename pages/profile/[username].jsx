@@ -173,6 +173,7 @@ const UserProfile = ({ userPosts }) => {
               </button>
             )}
           </div>
+          {/* showing followers on mobile */}
           <div className="flex items-center space-x-4 lg:hidden mt-3">
             <p className="text-sm1 font-libre tracking-wider text-sm shadow-sm shadow-sm1 p-2 rounded-sm font-semibold">
               Followers{" "}
@@ -186,6 +187,31 @@ const UserProfile = ({ userPosts }) => {
                 {userFollowings?.length}
               </span>
             </p>
+          </div>
+          {/* showing user info on mobile */}
+          <div className="space-y-2">
+            <div className="flex items-center space-x-4 lg:hidden mt-3">
+              <div className="text-sm1 font-libre tracking-wider text-sm shadow-sm shadow-sm1 p-2 rounded-sm font-semibold flex items-center space-x-1">
+                <p className="text-sm font-libre tracking-wider">Country :</p>
+                <p className="text-xs font-libre tracking-wider">
+                  {userDetails?.country}
+                </p>
+              </div>
+              <div className="text-sm1 font-libre tracking-wider text-sm shadow-sm shadow-sm1 p-2 rounded-sm font-semibold flex items-center space-x-1">
+                <p className="text-sm font-libre tracking-wider">
+                  Relationship :
+                </p>
+                <p className="text-xs font-libre tracking-wider">
+                  {userDetails?.relationships}
+                </p>
+              </div>
+            </div>
+            <div className="text-sm1 font-libre tracking-wider text-sm shadow-sm shadow-sm1 p-2 rounded-sm font-semibold flex items-center space-x-1">
+              <p className="text-sm font-libre tracking-wider">Bio :</p>
+              <p className="text-xs font-libre tracking-wider">
+                {userDetails?.description}
+              </p>
+            </div>
           </div>
         </div>
       </div>

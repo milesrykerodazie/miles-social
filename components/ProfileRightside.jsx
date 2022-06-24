@@ -70,6 +70,11 @@ const ProfileRightside = ({ userDetails }) => {
               <b>Relationship Status:</b> {userDetails?.relationships}
             </p>
           )}
+          {userDetails?.description && (
+            <p className="font-charm text-sm 2xl:text-xl tracking-wider text-sm7">
+              <b>Bio:</b> {userDetails?.description}
+            </p>
+          )}
         </div>
       </div>
 

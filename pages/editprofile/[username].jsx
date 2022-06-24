@@ -230,7 +230,7 @@ const EditUserProfile = ({ userData }) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="shadow-xl shadow-sm2 rounded-md w-full min-h-[calc(100vh-120px)]">
+      <div className="shadow-md shadow-sm2 rounded-md w-full min-h-[calc(100vh-120px)]">
         <h3 className="text-center text-sm1 text-lg font-charm font-bold tracking-wider">
           Edit Profile
         </h3>
@@ -513,14 +513,14 @@ const EditUserProfile = ({ userData }) => {
                 </p>
               </div>
               {processing ? (
-                <button className="flex items-center space-x-1 shadow-md shadow-sm1 px-3 py-1">
+                <button className="flex items-center space-x-1 shadow-md shadow-sm1 px-3 py-1 pb-4">
                   <p className="animate-slowpulse text-lg text-sm1">
                     Updating...
                   </p>
                   <ImSpinner3 className="w-6 h-6 animate-spin" />
                 </button>
               ) : (
-                <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-6 pb-5">
                   <p
                     className="text-sm1 shadow-md shadow-sm1 px-3 py-1 cursor-pointer"
                     onClick={() =>

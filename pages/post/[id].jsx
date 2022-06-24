@@ -360,7 +360,7 @@ const Post = ({ postData }) => {
           </>
         )}
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 pb-4">
           <input
             type="text"
             placeholder="Comment here"

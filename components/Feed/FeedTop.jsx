@@ -66,7 +66,7 @@ const FeedTop = ({ forceUpdate }) => {
     };
     try {
       setProcessing(true);
-      const createdPost = await axios.post(`${baseAPI}/create`, newPost);
+      await axios.post(`${baseAPI}/create`, newPost);
       forceUpdate();
       toast.success("Post successful!!");
       postDescription.current.value = "";
