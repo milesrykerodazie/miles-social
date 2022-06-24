@@ -19,6 +19,7 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import Comment from "../../components/comments/Comment";
 import CommentLoader from "../../components/loadingComponent/CommentLoader";
+import Head from "next/head";
 
 const Post = ({ postData }) => {
   //getting the user
@@ -138,7 +139,7 @@ const Post = ({ postData }) => {
   const handleComment = async (e) => {
     e.preventDefault();
     const comment = commentMessage.current.value;
-    console.log("comment typed => ", comment);
+
     if (comment === "") {
       toast.error("Please enter a comment");
       return;
@@ -163,6 +164,11 @@ const Post = ({ postData }) => {
 
   return (
     <div className="flex">
+      <Head>
+        <title>Post-Details</title>
+        <meta name="description" content="Details of a particular post" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="w-full lg:w-[70%] p-3 rounded-lg shadow-lg shadow-sm1/70 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2 ">

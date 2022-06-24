@@ -412,7 +412,7 @@ const EditUserProfile = ({ userData }) => {
                 <div className="relative">
                   <label className="label">State</label>
                   <div className="select">
-                    <p className="p">
+                    <p className="p truncate">
                       {stateName === undefined ? "Select State" : stateName}
                     </p>
                     {!openState ? (
