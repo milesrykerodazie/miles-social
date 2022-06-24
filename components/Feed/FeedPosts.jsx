@@ -4,16 +4,17 @@ import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { ImSpinner3 } from "react-icons/im";
 import ReadMoreReadLess from "../Helpers/ReadMoreReadLess";
 import axios from "axios";
-import { baseAPI } from "../constants/Constant";
+import { baseAPI, GET_POST_COMMENTS } from "../constants/Constant";
 import { useEffect, useState } from "react";
-import FeedTop from "./FeedTop";
+
 import { format } from "timeago.js";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-export const FeedPosts = ({ feedPostData }) => {
+export const FeedPosts = ({ feedPostData, forceUpdate }) => {
+  const id = feedPostData?._id;
   const [userDetails, setUserDetails] = useState({});
   const { user } = useSelector((state) => ({ ...state.auth }));
 
@@ -87,12 +88,13 @@ export const FeedPosts = ({ feedPostData }) => {
       const response = await axios.delete(
         `${baseAPI}/deletepost/${feedPostData?._id}`
       );
+      forceUpdate();
       console.log("delete response => ", response);
       setDeleting(false);
       setConfirmDelete(false);
       setOpenDelete(false);
       toast.success("Post deleted successfully!!");
-      router.reload();
+      router.replace(router.asPath);
     } catch (error) {
       toast.error(error?.response?.data.message);
       setDeleting(false);
@@ -101,6 +103,21 @@ export const FeedPosts = ({ feedPostData }) => {
       console.log(error?.response?.data.message);
     }
   };
+
+  //getting the length of comments for each post
+  const [commentsLength, setCommentsLength] = useState(0);
+  // getting the data from the api
+  useEffect(() => {
+    try {
+      const fetchComments = async () => {
+        const commentRes = await axios.get(`${GET_POST_COMMENTS}/${id}`);
+        setCommentsLength(commentRes?.data.length);
+      };
+      fetchComments();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [id]);
 
   return (
     <div className="bg-sm1 rounded-lg shadow-md shadow-sm2/70 p-2 space-y-3 md:space-y-5">
@@ -111,6 +128,7 @@ export const FeedPosts = ({ feedPostData }) => {
             onClick={() => router.push(`/profile/${userDetails?.username}`)}
           >
             <Image
+              priority
               src={
                 userDetails?.profilePicture
                   ? userDetails?.profilePicture
@@ -227,8 +245,18 @@ export const FeedPosts = ({ feedPostData }) => {
             )}
           </p>
         </div>
-        <p className="text-lg text-sm7  font-quicksand">
-          <b>9</b> comments
+        <p
+          className="text-lg text-sm7  font-quicksand flex items-center space-x-2 cursor-pointer"
+          onClick={() => router.push(`/post/${id}`)}
+        >
+          {commentsLength !== 0 && <b>{commentsLength}</b>}{" "}
+          {commentsLength === 0 ? (
+            <span className="text-sm text-sm7">No comments</span>
+          ) : commentsLength === 1 ? (
+            <span className="text-sm text-sm7">Comment</span>
+          ) : (
+            <span className="text-sm text-sm7">Comments</span>
+          )}
         </p>
       </div>
     </div>

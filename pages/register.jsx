@@ -10,7 +10,7 @@ import { persistor } from "../redux/store";
 import { ImSpinner3 } from "react-icons/im";
 
 const Register = () => {
-  //checking console
+  //checking if the user is logged in
   const { isLoading, error, user } = useSelector((state) => ({
     ...state.auth,
   }));

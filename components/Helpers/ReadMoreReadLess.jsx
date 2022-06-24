@@ -20,7 +20,7 @@ const ReadMoreReadLess = ({
   return (
     <div className="">
       <p
-        className={`text-sm7 text-justify font-${fontWeight} text-${smallTextSize} 2xl:text-${textSize} text-${textColor} font-${font}`}
+        className={`text-justify font-${fontWeight} text-${smallTextSize} 2xl:text-${textSize} text-${textColor} font-${font} normal-case`}
       >
         {readMore ? children : children.substr(0, limit)}
       </p>

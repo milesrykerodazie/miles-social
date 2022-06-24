@@ -25,6 +25,11 @@ const UserProfile = ({ userPosts }) => {
   //router
   const router = useRouter();
 
+  //refresh page function
+  const refreshPage = () => {
+    router.replace(router.asPath);
+  };
+
   //states
 
   const [userFollowers, setUserFollowers] = useState([]);
@@ -109,6 +114,7 @@ const UserProfile = ({ userPosts }) => {
       <div className="">
         <div className="relative max-w-full mx-auto h-40 2xl:h-60">
           <Image
+            priority
             src={
               userDetails?.coverPicture
                 ? userDetails?.coverPicture
@@ -184,7 +190,11 @@ const UserProfile = ({ userPosts }) => {
         </div>
       </div>
       <div className="flex">
-        <UserFeed userFeeds={userFeeds} userDetails={userDetails} />
+        <UserFeed
+          userFeeds={userFeeds}
+          userDetails={userDetails}
+          refreshPage={refreshPage}
+        />
         <ProfileRightside userDetails={userDetails} />
       </div>
     </div>

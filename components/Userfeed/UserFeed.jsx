@@ -2,11 +2,11 @@ import LoadingSkeleton from "../loadingComponent/LoadingSkeleton";
 import UserFeedPosts from "./UserFeedPosts";
 import UserFeedTop from "./UserFeedTop";
 
-const UserFeed = ({ userFeeds, userDetails }) => {
+const UserFeed = ({ userFeeds, userDetails, refreshPage }) => {
   return (
     <div className="px-3 w-full xl:w-[70%]">
       <div className="sticky top-[60px] lg:top-[80px] z-40">
-        <UserFeedTop userDetails={userDetails} />
+        <UserFeedTop userDetails={userDetails} refreshPage={refreshPage} />
       </div>
       {!userFeeds ? (
         <div className="space-y-4">
@@ -30,6 +30,7 @@ const UserFeed = ({ userFeeds, userDetails }) => {
               key={post?._id}
               post={post}
               userDetails={userDetails}
+              refreshPage={refreshPage}
             />
           ))}
         </div>

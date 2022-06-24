@@ -83,6 +83,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setLogOut, setUsersOnline, setConversations } =
+export const { setLogOut, setUsersOnline, setConversations, setPostComments } =
   authSlice.actions;
 export default authSlice.reducer;

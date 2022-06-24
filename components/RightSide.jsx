@@ -75,6 +75,7 @@ const RightSide = () => {
       <div className="flex items-center space-x-2">
         <div className="relative w-10 h-10 2xl:w-12 2xl:h-12">
           <Image
+            priority
             src={userPic}
             alt="logo"
             layout="fill"
@@ -89,6 +90,7 @@ const RightSide = () => {
       <div className="relative">
         <div className="relative w-full h-36 2xl:h-44">
           <Image
+            priority
             src={userPic}
             alt="logo"
             layout="fill"

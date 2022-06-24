@@ -80,7 +80,7 @@ const Messenger = ({ conversations }) => {
     });
 
     socket.current.on("received_message", (data) => {
-      console.log("data => ", data);
+      // console.log("data => ", data);
       setArrivingMessage({
         sender: data.senderId,
         message: data.message,

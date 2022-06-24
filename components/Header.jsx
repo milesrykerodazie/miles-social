@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "../public/assets/social-logo2.png";
 import { BsSearch, BsFillPersonFill } from "react-icons/bs";
@@ -18,6 +18,15 @@ const Header = () => {
   const userPicture = user?.user?.profilePicture;
 
   const [isOpen, setIsOpen] = useState(false);
+  const [pageScroll, setPageScroll] = useState(false);
+
+  //useEffect for page scroll
+  useEffect(() => {
+    const scrl = window.addEventListener("scroll", () =>
+      setPageScroll(window.scrollY > 90)
+    );
+    return scrl;
+  }, [pageScroll]);
 
   // handle is open
   const handleOpen = () => {
@@ -54,7 +63,11 @@ const Header = () => {
   };
 
   return (
-    <div className="bg-sm4 flex items-center justify-between fixed top-0 w-full h-[80px] z-50">
+    <div
+      className={`bg-sm4 flex items-center justify-between fixed top-0 w-full h-[80px] z-50 duration-400 ease-in ${
+        pageScroll && "shadow-md shadow-sm4"
+      }`}
+    >
       <div className="flex items-center space-x-1 p-2 w-full">
         <div className="relative w-12 h-12 2xl:w-16 2xl:h-16">
           <Image
@@ -118,6 +131,7 @@ const Header = () => {
           >
             <div className="relative w-10 h-10 2xl:w-12 2xl:h-12 -mt-2">
               <Image
+                priority
                 src={
                   userPicture
                     ? userPicture

@@ -102,6 +102,7 @@ const OnlineFriends = ({
                 <div className="relative w-10 h-10">
                   <div>
                     <Image
+                      priority
                       src={
                         onlineFriend?.profilePicture
                           ? onlineFriend?.profilePicture

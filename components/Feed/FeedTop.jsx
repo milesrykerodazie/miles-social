@@ -12,12 +12,9 @@ import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
 import Resizer from "react-image-file-resizer";
 
-const FeedTop = () => {
+const FeedTop = ({ forceUpdate }) => {
   //getting the user from redux using the useSelector hook
   const { user } = useSelector((state) => ({ ...state.auth }));
-  //getting the first letters of the first andlast names
-  const flFirstName = user?.user.firstName[0];
-  const flLastName = user?.user.lastName[0];
 
   //states for the post
   const [image, setImage] = useState("");
@@ -53,7 +50,7 @@ const FeedTop = () => {
       console.log(error);
     }
   };
-  console.log("image => ", image);
+
   //handle submit post
   const handlePostSubmit = async (e) => {
     e.preventDefault();
@@ -69,11 +66,11 @@ const FeedTop = () => {
     };
     try {
       setProcessing(true);
-      await axios.post(`${baseAPI}/create`, newPost);
+      const createdPost = await axios.post(`${baseAPI}/create`, newPost);
+      forceUpdate();
+      toast.success("Post successful!!");
       postDescription.current.value = "";
       setImage("");
-      toast.success("Post successful!!");
-      router.reload();
       setProcessing(false);
     } catch (error) {
       console.log(error);
@@ -83,20 +80,19 @@ const FeedTop = () => {
   return (
     <div className="bg-sm1 h-auto rounded-b-lg shadow-md shadow-sm2/70 px-2 py-3 mb-5">
       <div className="flex items-center md:space-x-2">
-        {user?.user.profilePicture ? (
-          <div className="relative w-10 h-10 2xl:w-12 2xl:h-12">
-            <Image
-              src={user?.user.profilePicture}
-              alt="logo"
-              layout="fill"
-              className="rounded-full cursor-pointer"
-            />
-          </div>
-        ) : (
-          <div className="w-10 h-10 2xl:w-12 2xl:h-12 rounded-full cursor-pointer bg-sm7 flex items-center justify-center">
-            <p className="text-sm1 text-xl">{flFirstName + flLastName}</p>
-          </div>
-        )}
+        <div className="relative w-10 h-10 2xl:w-12 2xl:h-12">
+          <Image
+            priority
+            src={
+              user?.user.profilePicture
+                ? user?.user.profilePicture
+                : "https://icon-library.com/images/blank-person-icon/blank-person-icon-9.jpg"
+            }
+            alt="logo"
+            layout="fill"
+            className="rounded-full cursor-pointer"
+          />
+        </div>
 
         <input
           type="text"

@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
 import Resizer from "react-image-file-resizer";
 
-const UserFeedTop = ({ userDetails }) => {
+const UserFeedTop = ({ userDetails, refreshPage }) => {
   //getting the logged in user from redux using useSelector hook
   const { user } = useSelector((state) => ({ ...state.auth }));
 
@@ -69,10 +69,10 @@ const UserFeedTop = ({ userDetails }) => {
     try {
       setProcessing(true);
       await axios.post(`${baseAPI}/create`, newPost);
+      router.replace(router.asPath);
       postDescription.current.value = "";
       setImage("");
       toast.success("Post successful!!");
-      router.reload();
       setProcessing(false);
     } catch (error) {
       console.log(error);
@@ -88,6 +88,7 @@ const UserFeedTop = ({ userDetails }) => {
       <div className="flex items-center space-x-2">
         <div className="relative w-10 h-10 2xl:w-12 2xl:h-12">
           <Image
+            priority
             src={
               userDetails?.profilePicture
                 ? userDetails?.profilePicture

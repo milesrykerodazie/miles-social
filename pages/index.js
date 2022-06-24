@@ -6,6 +6,7 @@ import { TIMELINE_POSTS } from "../components/constants/Constant";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useReducer } from "react";
 
 export default function Home() {
   //getting the uswr from redux using the useSelector hook
@@ -15,7 +16,8 @@ export default function Home() {
   const onlineFriends = useSelector((state) => state.auth.usersOnline);
 
   //state fror timeline posts
-  const [timelinePosts, setTimelinePosts] = useState({});
+  const [timelinePosts, setTimelinePosts] = useState([]);
+  const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
 
   //getting the timeline posts from the api
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function Home() {
       }
     };
     getTimelinePosts();
-  }, [userId]);
+  }, [userId, reducerValue]);
 
   //removing unnecessary data from the api
   const feedData = timelinePosts?.timelinePosts;
@@ -48,7 +50,7 @@ export default function Home() {
       </Head>
 
       <main className="flex ">
-        <Feed feedData={feedData} />
+        <Feed feedData={feedData} forceUpdate={forceUpdate} />
         <RightSide onlineFriends={onlineFriends} />
       </main>
     </div>
