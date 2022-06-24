@@ -206,7 +206,7 @@ const UserProfile = ({ userPosts }) => {
                 </p>
               </div>
             </div>
-            <div className="text-sm1 font-libre tracking-wider text-sm shadow-sm shadow-sm1 p-2 rounded-sm font-semibold flex items-center space-x-1">
+            <div className="lg:hidden text-sm1 font-libre tracking-wider text-sm shadow-sm shadow-sm1 p-2 rounded-sm font-semibold flex items-center space-x-1">
               <p className="text-sm font-libre tracking-wider">Bio :</p>
               <p className="text-xs font-libre tracking-wider">
                 {userDetails?.description}
