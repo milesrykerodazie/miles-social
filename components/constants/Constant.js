@@ -1,20 +1,19 @@
-export const baseAPI =
-  "https://milessocial-media-backend.herokuapp.com/milesapi";
+export const baseAPI = 'https://web-production-cd53.up.railway.app/milesapi';
 
 export const TIMELINE_POSTS =
-  "https://milessocial-media-backend.herokuapp.com/milesapi/timelineposts";
+   'https://web-production-cd53.up.railway.app/milesapi/timelineposts';
 
 export const USERNAME_POSTS =
-  "https://milessocial-media-backend.herokuapp.com/milesapi/usernameposts";
+   'https://web-production-cd53.up.railway.app/milesapi/usernameposts';
 
 export const USER_DETAILS =
-  "https://milessocial-media-backend.herokuapp.com/milesapi/userDetails";
+   'https://web-production-cd53.up.railway.app/milesapi/userDetails';
 
 export const SINGLE_POST =
-  "https://milessocial-media-backend.herokuapp.com/milesapi/getpost";
+   'https://web-production-cd53.up.railway.app/milesapi/getpost';
 
 export const GET_POST_COMMENTS =
-  "https://milessocial-media-backend.herokuapp.com/milesapi/comments";
+   'https://web-production-cd53.up.railway.app/milesapi/comments';
 
 export const DELETE_COMMENT =
-  "https://milessocial-media-backend.herokuapp.com/milesapi/  deletecomment";
+   'https://web-production-cd53.up.railway.app/milesapi/deletecomment';
