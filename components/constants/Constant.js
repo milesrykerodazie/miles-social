@@ -1,19 +1,19 @@
-export const baseAPI = 'https://web-production-cd53.up.railway.app/milesapi';
+export const baseAPI = "https://miles-social-backend.vercel.app/milesapi";
 
 export const TIMELINE_POSTS =
-   'https://web-production-cd53.up.railway.app/milesapi/timelineposts';
+  "https://miles-social-backend.vercel.app/milesapi/timelineposts";
 
 export const USERNAME_POSTS =
-   'https://web-production-cd53.up.railway.app/milesapi/usernameposts';
+  "https://miles-social-backend.vercel.app/milesapi/usernameposts";
 
 export const USER_DETAILS =
-   'https://web-production-cd53.up.railway.app/milesapi/userDetails';
+  "https://miles-social-backend.vercel.app/milesapi/userDetails";
 
 export const SINGLE_POST =
-   'https://web-production-cd53.up.railway.app/milesapi/getpost';
+  "https://miles-social-backend.vercel.app/milesapi/getpost";
 
 export const GET_POST_COMMENTS =
-   'https://web-production-cd53.up.railway.app/milesapi/comments';
+  "https://miles-social-backend.vercel.app/milesapi/comments";
 
 export const DELETE_COMMENT =
-   'https://web-production-cd53.up.railway.app/milesapi/deletecomment';
+  "https://miles-social-backend.vercel.app/milesapi/deletecomment";
