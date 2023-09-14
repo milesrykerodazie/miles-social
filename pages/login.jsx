@@ -109,7 +109,10 @@ const Login = () => {
             minLength={6}
             className="px-2 py-3 md:py-5 rounded-md !bg-sm7 text-sm1 font-quicksand text-lg outline-none placeholder:font-quicksand placeholder:text-lg w-full"
           />
-
+          <div className="text-[13px] text-white flex items-center flex-col md:flex-row md:space-x-3 space-y-2 md:space-y-0">
+            <span>test-email: rykermiles@gmail.com</span>
+            <span>test-password: 1234567</span>
+          </div>
           <button
             type="submit"
             className="bg-sm8 text-sm1 font-quicksand font-semibold py-2 md:py-4 rounded-md text-xl tracking-wider"
